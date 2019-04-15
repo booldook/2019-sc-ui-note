@@ -1,3 +1,3 @@
 .google_sign {display: flex; margin-top: 1rem; align-items: center;}
-.google_sign > .google_icon {width: 50px; border: 1px solid #333; border-radius: 50%; margin: 0 0.5rem; display: none;}
+.google_sign > .google_icon {width: 50px; border: 1px solid #333; border-radius: 50%; margin: 0 0.5rem; display: none; overflow: hidden;}
 .google_sign > .google_cont {min-width: 200px; margin: 0 0.5rem; display: none;}
