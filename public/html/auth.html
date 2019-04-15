@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Firebase Auth</title>
+	<link rel="stylesheet" href="../css/fa.min.css">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/base.css">
+	<link rel="stylesheet" href="../css/auth.css">
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/wow.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="jumbotron">
+		<h2>구글 로그인</h2>
+	</div>
+	<button class="btn btn-primary" id="bt_login_google">
+		<i class="fab fa-google"></i> 구글 로그인
+	</button>
+</div>
+	
+<script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBdqHr1B8-GGa1UpavRBGo2wfDMSTpXFuI",
+    authDomain: "booldook-note3.firebaseapp.com",
+    databaseURL: "https://booldook-note3.firebaseio.com",
+    projectId: "booldook-note3",
+    storageBucket: "booldook-note3.appspot.com",
+    messagingSenderId: "59442077127"
+  };
+  firebase.initializeApp(config);
+</script>
+<script src="../js/auth.js"></script>
+</body>
+</html>
