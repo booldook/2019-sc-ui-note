@@ -10,3 +10,4 @@ body {margin-bottom: 1000px;}
 .gbooks {margin-top: 2rem; display: flex;}
 .gbooks > .card {flex: 1 1;}
 .gbooks input {margin: 0.25rem 0;}
+.gbook_li {margin-top: 1rem;}

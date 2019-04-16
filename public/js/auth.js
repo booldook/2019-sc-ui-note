@@ -55,7 +55,10 @@ function onRev(data) {
 }
 
 function onAdd2(data) {
-	console.log(data);
+	console.log(data.key);
+	console.log(data.val().writer);
+	console.log(data.val().content);
+	console.log(data.val().wdate);
 }
 
 function onChg2(data) {
