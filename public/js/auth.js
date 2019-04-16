@@ -19,6 +19,9 @@ var ref = null;
 	db.ref("root/users").on("child_added", onAdd);
 	db.ref("root/users").on("child_removed", onRev);
 	db.ref("root/users").on("child_changed", onChg);
+	db.ref("root/gbooks").on("child_added", onAdd2);
+	db.ref("root/gbooks").on("child_removed", onRev2);
+	db.ref("root/gbooks").on("child_changed", onChg2);
 })();
 
 // DB 저장
@@ -27,6 +30,14 @@ $("#bt_join").click(function(){
 		name: $("#name").val(),
 		email: $("#email").val(),
 		pass: $("#pass").val()
+	}).key;
+});
+
+$("#bt_save").click(function(){
+	db.ref("root/gbooks").push({
+		writer: $("#writer").val(),
+		content: $("#content").val(),
+		wdate: new Date().getTime()
 	}).key;
 });
 
@@ -40,6 +51,18 @@ function onChg(data) {
 }
 
 function onRev(data) {
+	console.log(data);
+}
+
+function onAdd2(data) {
+	console.log(data);
+}
+
+function onChg2(data) {
+	console.log(data);
+}
+
+function onRev2(data) {
 	console.log(data);
 }
 
