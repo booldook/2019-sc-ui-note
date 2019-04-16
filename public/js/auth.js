@@ -45,6 +45,12 @@ $("#bt_save").click(function(){
 	}).key;
 });
 
+function dataRev(obj) {
+	var $tr = $(obj).parent().parent();
+	var id = $tr.attr("id");
+	db.ref("root/gbooks/"+id).remove();
+}
+
 // DB 이벤트 콜백
 function onAdd(data) {
 	console.log(data);
@@ -65,6 +71,7 @@ function onAdd2(data) {
 	html += '<td>'+data.val().writer+'</td>';
 	html += '<td>'+dt+'</td>';
 	html += '<td>'+data.val().content+'</td>';
+	html += '<td><i class="fas fa-window-close" onclick="dataRev(this);"></i></td>';
 	html += '</tr>';
 	$("#gbook_tb > tbody").prepend(html);
 }
@@ -74,8 +81,9 @@ function onChg2(data) {
 }
 
 function onRev2(data) {
-	console.log(data);
+	$("#"+data.key).remove();
 }
+
 
 
 
