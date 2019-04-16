@@ -8,11 +8,15 @@ firebase.initializeApp({
 	messagingSenderId: "59442077127"
 });
 
-// 전역변수 설정
+// 전역변수/함수 설정
 var auth = firebase.auth();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
 var db = firebase.database();
 var ref = null;
+function zp(n) {
+	if(n < 10) return '0'+n;
+	else return n;
+}
 
 // 최초실행함수
 (function init(){
@@ -55,10 +59,14 @@ function onRev(data) {
 }
 
 function onAdd2(data) {
-	console.log(data.key);
-	console.log(data.val().writer);
-	console.log(data.val().content);
-	console.log(data.val().wdate);
+	var d = new Date(data.val().wdate);
+	var dt = d.getFullYear() + "-" + zp(d.getMonth()+1) + "-" + zp(d.getDate()) + " " + zp(d.getHours()) + ":" + zp(d.getMinutes()) + ":" + zp(d.getSeconds());
+	var html = '<tr id="'+data.key+'">';
+	html += '<td>'+data.val().writer+'</td>';
+	html += '<td>'+dt+'</td>';
+	html += '<td>'+data.val().content+'</td>';
+	html += '</tr>';
+	$("#gbook_tb > tbody").prepend(html);
 }
 
 function onChg2(data) {
