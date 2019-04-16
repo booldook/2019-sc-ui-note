@@ -1,7 +1,12 @@
+body {margin-bottom: 1000px;}
 .google_sign {display: flex; margin-top: 1rem; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem;}
-.google_sign > .google_icon {width: 50px; border: 1px solid #333; border-radius: 50%; margin: 0 0.5rem; display: none; overflow: hidden;}
+.google_sign > .google_icon {width: 50px; border: 1px solid #ddd; border-radius: 50%; margin: 0 0.5rem; display: none; overflow: hidden;}
 .google_sign > .google_cont {min-width: 200px; margin: 0 0.5rem; display: none;}
 
 .dbs {margin-top: 2rem; display: flex;}
 .dbs > .card {flex: 0 1 33.33%;}
 .dbs input {margin: 0.25rem 0;}
+
+.gbooks {margin-top: 2rem; display: flex;}
+.gbooks > .card {flex: 1 1;}
+.gbooks input {margin: 0.25rem 0;}
