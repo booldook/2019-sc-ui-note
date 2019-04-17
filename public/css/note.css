@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR');
+@import url('https://fonts.googleapis.com/css?family=Cute+Font');
+html, body {font-family: 'Noto Sans KR', sans-serif; color: #333;}
+/* html, body {font-family: 'Cute Font', cursive;} */
+
+.tops {background: url(../img/tops_bg.jpg) no-repeat center; background-size: cover;  border-bottom: 1px solid rgb(151, 145, 63)}
+.tops > div:not(:last-child) {float: left; padding: 1rem; font-weight: bold; font-size: 1.5rem;}
+.tops > div:last-child {float: right; padding-bottom: 1rem; padding-right: 1rem;}
