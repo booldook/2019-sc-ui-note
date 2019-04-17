@@ -32,6 +32,7 @@ button {border: none;}
 .hover:hover {opacity: 0.8;}
 .hover-r {opacity: 0.8;}
 .hover-r:hover {opacity: 1;}
+.gap {flex: 1 1;}
 
 /***** 폰트설정 *****/
 .font-pf {font-family: "Playfair Display";}

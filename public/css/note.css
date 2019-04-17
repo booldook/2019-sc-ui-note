@@ -3,6 +3,16 @@
 html, body {font-family: 'Noto Sans KR', sans-serif; color: #333;}
 /* html, body {font-family: 'Cute Font', cursive;} */
 
+/* 
 .tops {background: url(../img/tops_bg.jpg) no-repeat center; background-size: cover;  border-bottom: 1px solid rgb(151, 145, 63)}
 .tops > div:not(:last-child) {float: left; padding: 1rem; font-weight: bold; font-size: 1.5rem;}
-.tops > div:last-child {float: right; padding-bottom: 1rem; padding-right: 1rem;}
+.tops > div:last-child {float: right; padding-bottom: 1rem; padding-right: 1rem;} 
+*/
+
+.tops {background: url(../img/tops_bg.jpg) no-repeat center; background-size: cover;  border-bottom: 1px solid rgb(151, 145, 63); display: flex;}
+.tops > div {background-color: rgba(0,0,0,0.5); color: #fff; padding: 1rem 0; display: flex; align-items: center;}
+.tops > .bars {font-size: 1.5rem; font-weight: bold; cursor: pointer; padding: 1rem 0.5rem;}
+.tops > .tits {font-size: 1.35rem; font-weight: bold; padding: 1rem 0.5rem;}
+.tops > .signs {flex: 1 1; display: flex; justify-content: flex-end;}
+.tops > .signs > div {margin-right: 1rem;}
+.tops > .signs > .photos {width: 40px; height: 40px; overflow: hidden; border-radius: 50%; border: 1px solid #bbb;}
