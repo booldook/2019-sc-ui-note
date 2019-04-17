@@ -24,6 +24,12 @@ html, body {font-family: 'Noto Sans KR', sans-serif; color: #333;}
 
 .bodys {display: flex;}
 .bodys > .lists {flex: 1 1 30%; overflow-y: auto; background-color: #f1f1f1; border-right: 3px solid cornflowerblue;}
+.bodys .list {display: flex; border-bottom: 1px solid cornflowerblue; padding: 0.5rem;}
+.bodys .list > :nth-child(1) {flex: 0 0 60px; width: 60px; height: 60px; line-height: 60px; text-align: center; background-color: goldenrod; border-radius: 50%; margin-right: 1rem;}
+.bodys .list > :nth-child(2) {flex: 1 1 100%;}
+.bodys .list > :nth-child(2) > :nth-child(1) {font-size: 1.5rem; font-weight: bold; font-family: 'Cute Font', cursive; height: 1.6rem; overflow-y: hidden;}
+.bodys .list > :nth-child(2) > :nth-child(2) {font-size: 0.875rem; color: #999; margin-top: 0.5rem;}
+.bodys .list > :nth-child(3) {margin-left: 1rem;}
 .bodys > .writes {flex: 1 1 70%;}
 
 .footers {padding: 1rem; text-align: center; background-color: dimgrey; color: #fff;}
