@@ -4,6 +4,17 @@ var googleAuth = new firebase.auth.GoogleAuthProvider();
 var user = null;
 var db = firebase.database();
 var ref = null;
+function modalOpen(headTxt, contTxt) {
+	$("#modal_head").text(headTxt);
+	$("#modal_cont").text(contTxt);
+	$("#modal").css("display", "flex");
+}
+$("#bt_modal_close").click(function(e) {
+	e.stopPropagation();
+	$("#modal_head").text('');
+	$("#modal_cont").text('');
+	$("#modal").css("display", "none");
+});
 
 /***** 인증처리 *****/
 auth.onAuthStateChanged(onAuth);
@@ -60,11 +71,19 @@ $("#bt_new").on("click", function(){
 $("#bt_save").on("click", function(){
 	var content = $("#content").val();
 	if(content == "") {
-		
+		modalOpen("경고", "내용을 입력하세요.");
+		return false;
+	}
+	else {
+		db.ref("root/notes/"+user.uid).push({
+			content: content,
+			wdate: new Date().getTime()
+		}).key;
+		$("#content").val('');
 	}
 });
 $("#bt_up").on("click", function(){
-
+	console.log("수정!");
 });
 $("#bt_cls").on("click", function(){
 
