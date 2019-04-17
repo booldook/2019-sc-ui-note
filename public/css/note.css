@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR');
 @import url('https://fonts.googleapis.com/css?family=Cute+Font');
 html, body {font-family: 'Noto Sans KR', sans-serif; color: #333;}
-body {display: flex; flex-direction: column;}
-.tops {flex: 0 0;}
-.bodys {flex: 1 1;}
-.footers { flex: 0 0;}
+.tops {height: 80px;}
+.bodys {height: calc(100% - 130px);}
+.footers {height: 50px;}
 /* html, body {font-family: 'Cute Font', cursive;} */
 
 /* 
@@ -24,7 +23,7 @@ body {display: flex; flex-direction: column;}
 #bt_signin, #bt_signout {display: none;}
 
 .bodys {display: flex;}
-.bodys > .lists {flex: 1 1 30%; background-color: #f1f1f1; border-right: 3px solid cornflowerblue;}
+.bodys > .lists {flex: 1 1 30%; overflow-y: auto; background-color: #f1f1f1; border-right: 3px solid cornflowerblue;}
 .bodys > .writes {flex: 1 1 70%;}
 
 .footers {padding: 1rem; text-align: center; background-color: dimgrey; color: #fff;}
