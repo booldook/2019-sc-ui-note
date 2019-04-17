@@ -40,32 +40,36 @@
 	</nav>
 	<section class="bodys">
 		<ul class="lists">
-			<li class="list">
-				<h1>테</h1>
-				<div>
-					<div class="title">테스트 입니다.</div>
-					<div class="wdate">2019-04-17 11:37:56</div>
-				</div>
-				<div><i class="fas fa-trash-alt"></i></div>
-			</li>
+			
 		</ul>
 		<div class="writes">
 			<div>
-				<button class="btn btn-primary">신규 글</button>
+				<button class="btn btn-primary" id="bt_new">신규 글</button>
 			</div>
 			<div>
 				<textarea id="content" placeholder="메모를 작성하세요."></textarea>
 			</div>
 			<div>
-				<button class="btn btn-success">저장</button> 
-				<button class="btn btn-danger">수정</button> 
-				<button class="btn btn-info">취소</button> 
+				<button class="btn btn-success" id="bt_save">저장</button> 
+				<button class="btn btn-danger" id="bt_up">수정</button> 
+				<button class="btn btn-info" id="bt_cls">취소</button> 
 			</div>
 		</div>
 	</section>
 	<footer class="footers">
 		powered by booldook
 	</footer>
+	<div class="modal">
+		<div class="card">
+			<div class="card-header">
+				<h5><i class="fas fa-exclamation-circle"></i> <span>알림</span></h5>
+			</div>
+			<div class="card-body" id="modal_cont">경고입니다.</div>
+			<div class="card-footer">
+				<button class="btn btn-danger">닫기</button>
+			</div>
+		</div>	
+	</div>
 	<script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
 	<script src="../js/fbinit.js"></script>
 	<script src="../js/note.js"></script>
