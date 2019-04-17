@@ -17,3 +17,4 @@ html, body {font-family: 'Noto Sans KR', sans-serif; color: #333;}
 .tops > .signs > div {margin-right: 1rem;}
 .tops > .signs > .photos {width: 40px; height: 40px; overflow: hidden; border-radius: 50%; border: 1px solid #bbb; display: none;}
 .tops > .signs > .conts {display: none;}
+#bt_signin, #bt_signout {display: none;}

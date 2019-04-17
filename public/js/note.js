@@ -1,10 +1,12 @@
 /***** 공통사항 *****/
 var auth = firebase.auth();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
+var user = null;
 
 /***** 인증처리 *****/
 auth.onAuthStateChanged(onAuth);
 function onAuth(data) {
+	user = data;
 	if(data == null) {
 		$(".signs > .photos").hide();
 		$(".signs > .conts").hide();
