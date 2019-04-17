@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR');
+@import url('https://fonts.googleapis.com/css?family=Cute+Font');
+html, body {font-family: 'Noto Sans KR', sans-serif; color: #333;}
+.tops {height: 80px;}
+.bodys {height: calc(100% - 130px);}
+.footers {height: 50px;}
+/* html, body {font-family: 'Cute Font', cursive;} */
+
+/* 
+.tops {background: url(../img/tops_bg.jpg) no-repeat center; background-size: cover;  border-bottom: 1px solid rgb(151, 145, 63)}
+.tops > div:not(:last-child) {float: left; padding: 1rem; font-weight: bold; font-size: 1.5rem;}
+.tops > div:last-child {float: right; padding-bottom: 1rem; padding-right: 1rem;} 
+*/
+
+.tops {background: url(../img/tops_bg.jpg) no-repeat center; background-size: cover;  border-bottom: 3px solid cornflowerblue; display: flex;}
+.tops > div {background-color: rgba(0,0,0,0.5); color: #fff; padding: 1rem 0; display: flex; align-items: center;}
+.tops > .bars {font-size: 1.5rem; font-weight: bold; cursor: pointer; padding: 1rem 0.5rem; display: none;}
+.tops > .tits {font-size: 1.35rem; font-weight: bold; padding: 1rem 0.5rem 1rem 2rem;}
+.tops > .signs {flex: 1 1; display: flex; justify-content: flex-end;}
+.tops > .signs > div {margin-right: 1rem;}
+.tops > .signs > .photos {width: 40px; height: 40px; overflow: hidden; border-radius: 50%; border: 1px solid #bbb; display: none;}
+.tops > .signs > .conts {display: none;}
+#bt_signin, #bt_signout {display: none;}
+
+.bodys {display: flex; position: relative;}
+.bodys > .lists {flex: 1 1 30%; overflow-y: auto; background-color: #f1f1f1; border-right: 3px solid cornflowerblue;}
+.bodys .list {display: flex; border-bottom: 1px solid cornflowerblue; padding: 0.5rem;}
+.bodys .list > :nth-child(1) {flex: 0 0 60px; width: 60px; height: 60px; line-height: 60px; text-align: center; background-color: goldenrod; border-radius: 50%; margin-right: 1rem;}
+.bodys .list > :nth-child(2) {flex: 1 1 100%;}
+.bodys .list > :nth-child(2) > :nth-child(1) {font-size: 1.5rem; font-weight: bold; font-family: 'Cute Font', cursive; height: 1.6rem; overflow-y: hidden;}
+.bodys .list > :nth-child(2) > :nth-child(2) {font-size: 0.875rem; color: #999; margin-top: 0.5rem;}
+.bodys .list > :nth-child(3) {margin-left: 1rem;}
+.bodys > .writes {flex: 1 1 70%; padding: 1rem; display: flex; flex-direction: column; }
+.bodys > .writes > :nth-child(1) {flex: 0 0 50px; display:flex; justify-content: flex-end; align-items: flex-start;}
+.bodys > .writes > :nth-child(2) {flex: 1 1 100%;}
+.bodys > .writes > :nth-child(3) {flex: 0 0 100px; display: flex; align-items: center; justify-content: center;}
+.bodys > .writes > :nth-child(3) > .btn {margin: 0 0.1rem;}
+#content {width: 100%; height: 100%; border: 1px solid cornflowerblue; border-radius: 4px; padding: 1rem;}
+
+.footers {padding: 1rem; text-align: center; background-color: dimgrey; color: #fff;}
+
+.modal {width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; }
+.modal > .card {min-width: 200px;}
+
+@media screen and (max-width: 768px) {
+	.tops > .bars {display: inline-flex;}
+	.tops > .tits {padding: 1rem 0.5rem;}
+	.tops > .signs > .conts > div {display: none;}
+	.bodys > .lists {position:absolute; width: 30%; left: -30%; top: 0; display: block;}
+}

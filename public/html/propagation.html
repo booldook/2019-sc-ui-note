@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>stopPropagation()</title>
+	<link rel="stylesheet" href="../css/fa.min.css">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/base.css">
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="box1" style="background:red;width:600px;height:600px;">
+		<div id="box2" style="background:green;width:400px;height:400px;">
+			<div id="box3" style="background:blue;width:200px;height:200px;"></div>
+		</div>
+	</div>
+	<script>
+		$("#box1").click(function(e){
+			console.log("box1");
+		});
+		$("#box2").click(function(e){
+			console.log("box2");
+		});
+		$("#box3").click(function(e){
+			console.log("box3");
+			e.stopPropagation();
+		});
+	</script>
+</body>
+</html>

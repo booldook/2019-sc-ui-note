@@ -25,3 +25,7 @@ function dataRev(obj) {
 	var key = $(obj).parent().attr("id");
 	db.ref("root/test/"+key).remove();
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 44760de5ff5a4f15a4d82cd698a3ccde2fbf0c15
