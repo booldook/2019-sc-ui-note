@@ -15,6 +15,18 @@ $("#bt_modal_close").click(function(e) {
 	$("#modal_cont").html('');
 	$("#modal").css("display", "none");
 });
+function localDate(ts) {
+	var d = new Date(ts);
+	console.log(	d.toString()	);
+	console.log(	d.getFullYear()	);
+	console.log(	zp(d.getMonth() + 1)	);
+	console.log(	zp(d.getMonth() + 1)	);
+}
+function zp(n) {
+	if(n < 10) return '0'+n;
+	else return n;
+}
+localDate(1555479856067);
 
 /***** 인증처리 *****/
 auth.onAuthStateChanged(onAuth);
@@ -59,7 +71,18 @@ function dbInit() {
 	db.ref("root/notes/"+user.uid).on("child_changed", onChg);
 }
 function onAdd(data) {
-	console.log(data);
+	console.log(data.key);
+	console.log(data.val());
+	var html = '';
+	var bTit = data.val().content.substring(0, 1);
+	html += '<li class="list" id="'+data.key+'">';
+	html += '<h1>'+bTit+'</h1>';
+	html += '<div>';
+	html += '<div class="title">'+data.val().content+'</div>';
+	html += '<div class="wdate">2019-04-17 11:37:56</div>';
+	html += '</div>';
+	html += '<div><i class="fas fa-trash-alt"></i></div>';
+	html += '</li>';
 }
 function onRev(data) {
 	console.log(data);
