@@ -5,14 +5,14 @@ var user = null;
 var db = firebase.database();
 var ref = null;
 function modalOpen(headTxt, contTxt) {
-	$("#modal_head").text(headTxt);
-	$("#modal_cont").text(contTxt);
+	$("#modal_head").html(headTxt);
+	$("#modal_cont").html(contTxt);
 	$("#modal").css("display", "flex");
 }
 $("#bt_modal_close").click(function(e) {
 	e.stopPropagation();
-	$("#modal_head").text('');
-	$("#modal_cont").text('');
+	$("#modal_head").html('');
+	$("#modal_cont").html('');
 	$("#modal").css("display", "none");
 });
 
@@ -27,6 +27,9 @@ function onAuth(data) {
 		$("#bt_signout").hide();
 		$(".signs > .photos > img").attr("src", "");
 		$(".signs > .conts > div").html("");
+		$("#bt_modal_close").hide();
+		$("#bt_signin2").show();
+		modalOpen("알림", "로그인을 하셔야 사이트를 이용하실 수 있습니다.<br>하단의 구글 로그인을 이용하세요.");
 	}
 	else {
 		$(".signs > .photos").show();
@@ -36,10 +39,13 @@ function onAuth(data) {
 		$(".signs > .photos > img").attr("src", data.photoURL);
 		$(".signs > .conts > div").eq(0).text(data.displayName);
 		$(".signs > .conts > div").eq(1).text(data.email);
+		$("#bt_modal_close").show();
+		$("#bt_signin2").hide();
+		$("#bt_modal_close").trigger("click");
 		dbInit();
 	}
 }
-$("#bt_signin").on("click", function() {
+$("#bt_signin, #bt_signin2").on("click", function() {
 	auth.signInWithPopup(googleAuth);
 });
 $("#bt_signout").on("click", function() {
