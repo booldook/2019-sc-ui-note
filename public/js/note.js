@@ -39,7 +39,7 @@ function onAuth(data) {
 	user = data;
 	if(user == null) chgState('');
 	else {
-		chgState('R');
+		chgState('S');
 		dbInit();
 	}
 }
@@ -55,10 +55,11 @@ function dbInit() {
 	db.ref("root/notes/"+user.uid).on("child_added", onAdd);
 	db.ref("root/notes/"+user.uid).on("child_removed", onRev);
 	db.ref("root/notes/"+user.uid).on("child_changed", onChg);
+	key = '';
 }
 function onAdd(data) {
-	console.log(data.key);
-	console.log(data.val());
+	//console.log(data.key);
+	//console.log(data.val());
 	var html = '';
 	var bTit = data.val().content.substring(0, 1);
 	var colors = ["cornflowerblue",	"darkcyan", "darkorange", "deeppink","steelblue"];
@@ -72,47 +73,68 @@ function onAdd(data) {
 	html += '<div><i class="fas fa-trash-alt" onclick="dataRev(this);"></i></div>';
 	html += '</li>';
 	$(".lists").prepend(html);
+	key = '';
 }
 function onRev(data) {
 	$("#"+data.key).remove();
+	key = '';
 }
 function onChg(data) {
-	console.log(data);
+	var bTit = data.val().content.substring(0, 1);
+	var content = data.val().content;
+	$("#"+data.key).find("h1").text(bTit);
+	$("#"+data.key).find(".title").text(content);
 }
 
 
 
 /***** 데이터베이스 버튼 이벤트 *****/
 $("#bt_new").on("click", function(){
+	key = '';
 	chgState('C');
 });
 $("#bt_save").on("click", function(){
+	dataModify();
+});
+$("#bt_up").on("click", function(){
+	dataModify();
+});
+$("#bt_cls").on("click", function(){
+
+});
+$("#content").click(function(){
+	if(key == "") chgState('C');
+	else chgState('U');
+});
+function dataModify() {
 	var content = $("#content").val();
 	if(content == "") {
 		modalOpen("경고", "내용을 입력하세요.");
 		return false;
 	}
 	else {
-		db.ref("root/notes/"+user.uid).push({
-			content: content,
-			wdate: new Date().getTime()
-		}).key;
-		$("#content").val('');
+		if(key == "") {
+			db.ref("root/notes/"+user.uid).push({
+				content: content,
+				wdate: new Date().getTime()
+			}).key;
+			chgState('R');
+		}
+		else {
+			db.ref("root/notes/"+user.uid+"/"+key).update({
+				content: content,
+				mdate: new Date().getTime()
+			});
+			chgState('U');
+		}	
 	}
-});
-$("#bt_up").on("click", function(){
-	console.log("수정!");
-});
-$("#bt_cls").on("click", function(){
-
-});
-$("#content").click(function(){
-	chgState('C');
-});
+}
 function dataRev(obj) {
+	window.event.stopPropagation();
 	var $li = $(obj).parent().parent();
 	key = $li.attr("id");
 	db.ref("root/notes/"+user.uid+"/"+key).remove();
+	chgState('R');
 }
 function dataChg(obj) {
 	var $li = $(obj);
@@ -128,18 +150,32 @@ function dataChg(obj) {
 function chgState(chk) {
 	switch(chk) {
 		case "C" :
+			key = '';
 			$("#bt_new").attr("disabled", false);
+			$("#bt_save").show();
 			$("#bt_save").attr("disabled", false);
 			$("#bt_up").hide();
 			$("#bt_cls").attr("disabled", false);
+			$("#content").val('');
+			$("#content").focus();
 			break;
 		case "R" :
+			key = '';
 			$("#bt_new").attr("disabled", false);
+			$("#bt_save").show();
 			$("#bt_save").attr("disabled", "disabled");
 			$("#bt_up").hide();
 			$("#bt_cls").attr("disabled", "disabled");
 			$("#content").val('');
+			break;
+		case "U" :
+			$("#bt_save").hide();
+			$("#bt_up").show();
+			$("#bt_cls").attr("disabled", false);
+			break;
+		case "S" :
 			//로그인UI
+			$(".lists").empty();
 			$(".signs > .photos").show();
 			$(".signs > .conts").show();
 			$("#bt_signin").hide();
@@ -150,12 +186,7 @@ function chgState(chk) {
 			$("#bt_modal_close").show();
 			$("#bt_signin2").hide();
 			$("#bt_modal_close").trigger("click");
-			break;
-		case "U" :
-			//실행문
-			break;
-		case "D" :
-			//실행문
+			chgState('R');
 			break;
 		default :
 			$(".lists").empty();
