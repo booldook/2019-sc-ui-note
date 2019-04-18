@@ -4,6 +4,7 @@ webfonts
 fbinit.js
 storage.*
 google_auth.js
+google_auth.css
 
 # Logs
 logs
