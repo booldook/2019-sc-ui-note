@@ -47,5 +47,5 @@ html, body {font-family: 'Noto Sans KR', sans-serif; color: #333;}
 	.tops > .bars {display: inline-flex;}
 	.tops > .tits {padding: 1rem 0.5rem;}
 	.tops > .signs > .conts > div {display: none;}
-	.bodys > .lists {position:absolute; width: 30%; left: -30%; top: 0; display: block;}
+	.bodys > .lists {position:absolute; width: 30%; height: 100%; left: -30%; top: 0; display: block; z-index: 999;}
 }

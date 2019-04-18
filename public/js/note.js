@@ -100,7 +100,7 @@ $("#bt_up").on("click", function(){
 	dataModify();
 });
 $("#bt_cls").on("click", function(){
-
+	$("#content").val('');
 });
 $("#content").click(function(){
 	if(key == "") chgState('C');
@@ -158,6 +158,7 @@ function chgState(chk) {
 			$("#bt_cls").attr("disabled", false);
 			$("#content").val('');
 			$("#content").focus();
+			wingHide();
 			break;
 		case "R" :
 			key = '';
@@ -167,11 +168,13 @@ function chgState(chk) {
 			$("#bt_up").hide();
 			$("#bt_cls").attr("disabled", "disabled");
 			$("#content").val('');
+			wingShow();
 			break;
 		case "U" :
 			$("#bt_save").hide();
 			$("#bt_up").show();
 			$("#bt_cls").attr("disabled", false);
+			wingHide();
 			break;
 		case "S" :
 			//로그인UI
@@ -187,6 +190,7 @@ function chgState(chk) {
 			$("#bt_signin2").hide();
 			$("#bt_modal_close").trigger("click");
 			chgState('R');
+			wingShow();
 			break;
 		default :
 			$(".lists").empty();
@@ -205,20 +209,20 @@ function chgState(chk) {
 			$("#bt_modal_close").hide();
 			$("#bt_signin2").show();
 			modalOpen("알림", "로그인을 하셔야 사이트를 이용하실 수 있습니다.<br>하단의 구글 로그인을 이용하세요.");
+			wingHide();
 			break;
 	}
 }
 
+/***** 반응형 *****/
+$("#bt_wing").click(function(){
+	if($(".lists").position().left == 0) wingHide();
+	else wingShow();
+});
+function wingShow() {
+	$(".lists").stop().animate({"left": 0, "width": "90%"}, 200);
+}
+function wingHide() {
+	$(".lists").stop().animate({"left": "-30%", "width": "30%"}, 200);
+}
 
-
-
-/*
-<li class="list">
-	<h1>테</h1>
-	<div>
-		<div class="title">테스트 입니다.</div>
-		<div class="wdate">2019-04-17 11:37:56</div>
-	</div>
-	<div><i class="fas fa-trash-alt"></i></div>
-</li>
-*/
