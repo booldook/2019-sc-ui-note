@@ -4,6 +4,7 @@ var googleAuth = new firebase.auth.GoogleAuthProvider();
 var user = null;
 var db = firebase.database();
 var ref = null;
+var key = '';
 function modalOpen(headTxt, contTxt) {
 	$("#modal_head").html(headTxt);
 	$("#modal_cont").html(contTxt);
@@ -110,12 +111,16 @@ $("#content").click(function(){
 });
 function dataRev(obj) {
 	var $li = $(obj).parent().parent();
-	var key = $li.attr("id");
+	key = $li.attr("id");
 	db.ref("root/notes/"+user.uid+"/"+key).remove();
 }
 function dataChg(obj) {
-	var $li = $(obj).parent().parent();
-	var key = $li.attr("id");
+	var $li = $(obj);
+	key = $li.attr("id");
+	db.ref("root/notes/"+user.uid+"/"+key).once("value").then(function(data){
+		$("#content").val(data.val().content);
+		chgState('U');
+	});
 }
 
 
@@ -129,7 +134,6 @@ function chgState(chk) {
 			$("#bt_cls").attr("disabled", false);
 			break;
 		case "R" :
-			$(".lists").empty();
 			$("#bt_new").attr("disabled", false);
 			$("#bt_save").attr("disabled", "disabled");
 			$("#bt_up").hide();
