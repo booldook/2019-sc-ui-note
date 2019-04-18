@@ -17,16 +17,20 @@ $("#bt_modal_close").click(function(e) {
 });
 function localDate(ts) {
 	var d = new Date(ts);
-	console.log(	d.toString()	);
-	console.log(	d.getFullYear()	);
-	console.log(	zp(d.getMonth() + 1)	);
-	console.log(	zp(d.getMonth() + 1)	);
+	var dt = '';
+	//dt += d.getFullYear().toString().substring(2, 4) + '-';
+	dt += d.getFullYear() + '-';
+	dt += zp(d.getMonth() + 1) + '-';
+	dt += zp(d.getDate()) + ' ';
+	dt += zp(d.getHours()) + ':';
+	dt += zp(d.getMinutes()) + ':';
+	dt += zp(d.getSeconds());
+	return dt;
 }
 function zp(n) {
 	if(n < 10) return '0'+n;
 	else return n;
 }
-localDate(1555479856067);
 
 /***** 인증처리 *****/
 auth.onAuthStateChanged(onAuth);
@@ -79,10 +83,11 @@ function onAdd(data) {
 	html += '<h1>'+bTit+'</h1>';
 	html += '<div>';
 	html += '<div class="title">'+data.val().content+'</div>';
-	html += '<div class="wdate">2019-04-17 11:37:56</div>';
+	html += '<div class="wdate">'+localDate(data.val().wdate)+'</div>';
 	html += '</div>';
-	html += '<div><i class="fas fa-trash-alt"></i></div>';
+	html += '<div><i class="fas fa-trash-alt" onclick="dataRev(this);"></i></div>';
 	html += '</li>';
+	$(".lists").prepend(html);
 }
 function onRev(data) {
 	console.log(data);
