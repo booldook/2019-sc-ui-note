@@ -131,6 +131,27 @@ function dataRev(obj) {
 	db.ref("root/notes/"+user.uid+"/"+key).remove();
 }
 
+/***** 상태(UI)변경함수 *****/
+function chgState(chk) {
+	switch(chk) {
+		case "C" :
+			//실행문
+			break;
+		case "R" :
+			//실행문
+			break;
+		case "U" :
+			//실행문
+			break;
+		case "D" :
+			//실행문
+			break;
+	}
+}
+
+
+
+
 /*
 <li class="list">
 	<h1>테</h1>
