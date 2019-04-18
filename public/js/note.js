@@ -35,6 +35,7 @@ function zp(n) {
 /***** 인증처리 *****/
 auth.onAuthStateChanged(onAuth);
 function onAuth(data) {
+	$(".lists").empty();
 	user = data;
 	if(data == null) {
 		$(".signs > .photos").hide();
@@ -79,8 +80,10 @@ function onAdd(data) {
 	console.log(data.val());
 	var html = '';
 	var bTit = data.val().content.substring(0, 1);
+	var colors = ["cornflowerblue",	"darkcyan", "darkorange", "deeppink","steelblue"];
+	var color = colors[Math.floor(Math.random()*5)];
 	html += '<li class="list" id="'+data.key+'">';
-	html += '<h1>'+bTit+'</h1>';
+	html += '<h1 style="background-color:'+color+'">'+bTit+'</h1>';
 	html += '<div>';
 	html += '<div class="title">'+data.val().content+'</div>';
 	html += '<div class="wdate">'+localDate(data.val().wdate)+'</div>';
@@ -90,7 +93,7 @@ function onAdd(data) {
 	$(".lists").prepend(html);
 }
 function onRev(data) {
-	console.log(data);
+	$("#"+data.key).remove();
 }
 function onChg(data) {
 	console.log(data);
@@ -122,7 +125,11 @@ $("#bt_up").on("click", function(){
 $("#bt_cls").on("click", function(){
 
 });
-
+function dataRev(obj) {
+	var $li = $(obj).parent().parent()
+	var key = $li.attr("id");
+	db.ref("root/notes/"+user.uid+"/"+key).remove();
+}
 
 /*
 <li class="list">
