@@ -8,12 +8,9 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/html/note.html"
-      }
     ]
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

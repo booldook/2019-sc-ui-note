@@ -1,0 +1,56 @@
+var auth = firebase.auth();
+var googleAuth = new firebase.auth.GoogleAuthProvider();
+var user = null;
+function modalOpen(headTxt, contTxt) {
+	$("#modal_head").html(headTxt);
+	$("#modal_cont").html(contTxt);
+	$("#modal").css("display", "flex");
+}
+$("#bt_modal_close").click(function(e) {
+	e.stopPropagation();
+	$("#modal_head").html('');
+	$("#modal_cont").html('');
+	$("#modal").css("display", "none");
+});
+
+auth.onAuthStateChanged(function(data){
+	user = data;
+	if(user == null) chgState('');
+	else chgState('S');
+});
+$("#bt_signin, #bt_signin2").click(function(){
+	auth.signInWithPopup(googleAuth);
+});
+$("#bt_signout").click(function(){
+	auth.signOut();
+});
+
+function chgState(chk) {
+	switch(chk) {
+		case "S" :
+			// signin
+			$(".signs > .photos").show();
+			$(".signs > .conts").show();
+			$("#bt_signin").hide();
+			$("#bt_signout").show();
+			$(".signs > .photos > img").attr("src", user.photoURL);
+			$(".signs > .conts > div").eq(0).text(user.displayName);
+			$(".signs > .conts > div").eq(1).text(user.email);
+			$("#bt_modal_close").show();
+			$("#bt_signin2").hide();
+			$("#bt_modal_close").trigger("click");
+			break;
+		default :
+			// signout
+			$(".signs > .photos").hide();
+			$(".signs > .conts").hide();
+			$("#bt_signin").show();
+			$("#bt_signout").hide();
+			$(".signs > .photos > img").attr("src", "");
+			$(".signs > .conts > div").html("");
+			$("#bt_modal_close").hide();
+			$("#bt_signin2").show();
+			modalOpen("알림", "로그인을 하셔야 사이트를 이용하실 수 있습니다.<br>하단의 구글 로그인을 이용하세요.");
+			break;
+	}
+}
