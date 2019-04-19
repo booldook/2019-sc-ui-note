@@ -4,7 +4,6 @@ var db = firebase.database();
 var storage = firebase.storage();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
 var root = storage.ref().child("imgs");
-var uploader = null;
 var user = null;
 function modalOpen(headTxt, contTxt) {
 	$("#modal_head").html(headTxt);
@@ -42,27 +41,27 @@ $("#bt_signout").click(function(){
 	auth.signOut();
 });
 
-/***** 데이터 콜백 *****/
-function uploadIng(data) {
-	var progress = (data.bytesTransferred / data.totalBytes) * 100;
-	console.log('업로드 진행률 : ' + progress + '%');
-}
-function uploadErr(err) {
-	console.log(err);
-}
-function uploadDone() {
-	uploader.data.ref.getDownloadURL().then(function(url) {
-		console.log('파일위치 : ', url);
-	});
-}
-
 /***** 데이터 이벤트 *****/
 $("#bt_save").click(onSave);
 function onSave(){
 	var file = $("#pds")[0].files[0];
 	var gFile = splitName(file.name);
-	uploader = root.child(gFile.newName).put(file);
+	var data = null;
+	var uploader = root.child(gFile.newName).put(file);
 	uploader.on('state_changed', uploadIng, uploadErr, uploadDone);
+	function uploadIng(snapshot) {
+		data = snapshot;
+		var progress = (data.bytesTransferred / data.totalBytes) * 100;
+		console.log('업로드 진행률 : ' + progress + '%');
+	}
+	function uploadErr(err) {
+		console.log(err);
+	}
+	function uploadDone() {
+		data.ref.getDownloadURL().then(function(url) {
+			console.log('파일위치 : ', url);
+		});
+	}
 }
 
 
