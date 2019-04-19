@@ -36,6 +36,7 @@ function zp(n) {
 /***** 인증처리 *****/
 auth.onAuthStateChanged(onAuth);
 function onAuth(data) {
+	key = '';
 	user = data;
 	if(user == null) chgState('');
 	else {
@@ -55,7 +56,6 @@ function dbInit() {
 	db.ref("root/notes/"+user.uid).on("child_added", onAdd);
 	db.ref("root/notes/"+user.uid).on("child_removed", onRev);
 	db.ref("root/notes/"+user.uid).on("child_changed", onChg);
-	key = '';
 }
 function onAdd(data) {
 	//console.log(data.key);
