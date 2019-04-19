@@ -1,5 +1,9 @@
+/***** 공통사항 *****/
 var auth = firebase.auth();
+var db = firebase.database();
+var storage = firebase.storage();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
+var root = storage.ref().child("imgs");
 var user = null;
 function modalOpen(headTxt, contTxt) {
 	$("#modal_head").html(headTxt);
@@ -13,6 +17,7 @@ $("#bt_modal_close").click(function(e) {
 	$("#modal").css("display", "none");
 });
 
+/***** 사용자 인증 *****/
 auth.onAuthStateChanged(function(data){
 	user = data;
 	if(user == null) chgState('');
@@ -25,6 +30,30 @@ $("#bt_signout").click(function(){
 	auth.signOut();
 });
 
+/***** 데이터 콜백 *****/
+
+
+
+/***** 데이터 이벤트 *****/
+$("#bt_save").click(onSave);
+function onSave(){
+	var file = $("#pds")[0].files[0];
+	var oriName = file.name;
+	var nameArr = oriName.split('.');
+	console.log(nameArr);
+	var ext = nameArr.pop();
+	var name = '';
+	for(var i=0 in nameArr){
+		name += nameArr[i] + ".";
+	}
+	var name = name.substr(0, name.length - 1);
+	console.log(name);
+	console.log(ext);
+
+	
+}
+
+/***** UI 변경 *****/
 function chgState(chk) {
 	switch(chk) {
 		case "S" :
@@ -54,3 +83,13 @@ function chgState(chk) {
 			break;
 	}
 }
+
+/*
+var cart = "2-4-255,14-8-0,5278-1-0";
+var arr2 = cart.split(",");
+var prds = [];
+for(var i=0 in arr2) {
+	prds[i] = arr2[i].split("-");
+}
+console.log(prds);
+*/
