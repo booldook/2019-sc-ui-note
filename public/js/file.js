@@ -16,6 +16,17 @@ $("#bt_modal_close").click(function(e) {
 	$("#modal_cont").html('');
 	$("#modal").css("display", "none");
 });
+function splitName(name) {
+	var obj = {};
+	var arr = name.split('.');
+	obj.time = new Date().getTime();
+	obj.ext = arr.pop();
+	obj.oriFile = arr.join('.');
+	obj.oriName = obj.oriFile + '.' + obj.ext;
+	obj.newFile = obj.time + '-' + Math.floor(Math.random() * 90 + 10);
+	obj.newName = obj.newFile + '.' + obj.ext;
+	return obj;
+}
 
 /***** 사용자 인증 *****/
 auth.onAuthStateChanged(function(data){
@@ -38,19 +49,8 @@ $("#bt_signout").click(function(){
 $("#bt_save").click(onSave);
 function onSave(){
 	var file = $("#pds")[0].files[0];
-	var oriName = file.name;
-	var nameArr = oriName.split('.');
-	console.log(nameArr);
-	var ext = nameArr.pop();
-	var name = '';
-	for(var i=0 in nameArr){
-		name += nameArr[i] + ".";
-	}
-	var name = name.substr(0, name.length - 1);
-	console.log(name);
-	console.log(ext);
-
-	
+	var gFile = splitName(file.name);
+	var uploader = root.child(gFile.newName).put(file);
 }
 
 /***** UI 변경 *****/
