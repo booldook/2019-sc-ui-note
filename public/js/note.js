@@ -127,12 +127,15 @@ $("#bt_up").on("click", function(){
 	dataModify();
 });
 $("#bt_cls").on("click", function(){
-	$("#content").val('');
+	$("#form_wr")[0].reset();
 });
+/*
 $("#content").click(function(){
+	console.log(key);
 	if(key == "") chgState('C');
 	else chgState('U');
 });
+*/
 function dataModify() {
 	var content = $("#content").val();
 	var upfile = $("#upfile")[0].files[0];
@@ -167,7 +170,7 @@ function dataModify() {
 			}
 			else {
 				$(".loader").css("display", "flex");
-				var uploader = sRef.child(user.uid+"/"+file.newFile).put(upfile);
+				var uploader = sRef.child(user.uid+"/"+file.newName).put(upfile);
 				uploader.on("state_changed", uploadIng, uploadErr, uploadDone);
 				function uploadIng(snapshot){
 					data = snapshot;
@@ -195,13 +198,24 @@ function dataModify() {
 						}
 						else {
 							if(oldData.fileType != undefined) {
-								
+								storage.ref().child("notes/"+user.uid+"/"+fileName).delete().then(function(){
+									db.ref("root/notes/"+user.uid+"/"+key).update({
+										content: content,
+										oriName: file.oriName,
+										fileName: file.newName,
+										fileType: file.allow,
+										fileURL: url,
+										mdate: new Date().getTime()
+									});
+								});
 							}
-							db.ref("root/notes/"+user.uid+"/"+key).
-							db.ref("root/notes/"+user.uid+"/"+key).update({
-								content: content,
-								mdate: new Date().getTime()
-							});
+							else {
+								db.ref("root/notes/"+user.uid+"/"+key).
+									db.ref("root/notes/"+user.uid+"/"+key).update({
+										content: content,
+										mdate: new Date().getTime()
+									});	
+							}
 							chgState('U');
 						}
 					});
@@ -227,8 +241,23 @@ function dataChg(obj) {
 		oldData.fileType = data.val().fileType;
 		oldData.fileURL = data.val().fileURL;
 		oldData.oriName = data.val().oriName;
-		console.log(oldData);
 		$("#content").val(oldData.content);
+		if(oldData.fileType == "image") {
+			$(".imgs").css("display", "flex");
+			$(".pds").css("display", "none");
+			$(".imgs").find("img").attr("src", oldData.fileURL);
+			$(".imgs > li").eq(1).text(oldData.oriName);
+		}
+		else if(oldData.fileType == "file"){
+			$(".imgs").css("display", "none");
+			$(".pds").css("display", "flex");
+			$(".pds").find("a").attr("href", oldData.fileURL);
+			$(".pds").find("a").text(oldData.oriName);
+		}
+		else {
+			$(".imgs").css("display", "none");
+			$(".pds").css("display", "none");
+		}
 		chgState('U');
 	});
 }
@@ -245,7 +274,7 @@ function chgState(chk) {
 			$("#bt_save").attr("disabled", false);
 			$("#bt_up").hide();
 			$("#bt_cls").attr("disabled", false);
-			$("#bt_cls").trigger("click");
+			$("#form_wr")[0].reset();
 			$("#content").focus();
 			$(".imgs").hide();
 			$(".pds").hide();
@@ -259,7 +288,7 @@ function chgState(chk) {
 			$("#bt_save").attr("disabled", "disabled");
 			$("#bt_up").hide();
 			$("#bt_cls").attr("disabled", "disabled");
-			$("#bt_cls").trigger("click");
+			$("#form_wr")[0].reset();
 			$(".imgs").hide();
 			$(".pds").hide();
 			wingShow();
@@ -292,7 +321,7 @@ function chgState(chk) {
 			$("#bt_save").attr("disabled", "disabled");
 			$("#bt_up").hide();
 			$("#bt_cls").attr("disabled", "disabled");
-			$("#bt_cls").trigger("click");
+			$("#form_wr")[0].reset();
 			//로그인UI
 			$(".signs > .photos").hide();
 			$(".signs > .conts").hide();
