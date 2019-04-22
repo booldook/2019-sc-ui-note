@@ -7,6 +7,7 @@ var storage = firebase.storage();
 var sRef = storage.ref().child("notes");
 var ref = null;
 var key = '';
+var oldData = null;
 function modalOpen(headTxt, contTxt) {
 	$("#modal_head").html(headTxt);
 	$("#modal_cont").html(contTxt);
@@ -180,13 +181,31 @@ function dataModify() {
 				}
 				function uploadDone(){
 					$(".loader").css("display", "none");
-					console.log(data);
+					data.ref.getDownloadURL().then(function(url){
+						if(key == "") {
+							db.ref("root/notes/"+user.uid).push({
+								content: content,
+								wdate: new Date().getTime(),
+								oriName: file.oriName,
+								fileName: file.newName,
+								fileType: file.allow,
+								fileURL: url
+							}).key;
+							chgState('R');
+						}
+						else {
+							if(oldData.fileType != undefined) {
+								
+							}
+							db.ref("root/notes/"+user.uid+"/"+key).
+							db.ref("root/notes/"+user.uid+"/"+key).update({
+								content: content,
+								mdate: new Date().getTime()
+							});
+							chgState('U');
+						}
+					});
 				}
-			}
-			if(key == "") {
-			}
-			else {
-
 			}
 		}	
 	}
@@ -202,7 +221,14 @@ function dataChg(obj) {
 	var $li = $(obj);
 	key = $li.attr("id");
 	db.ref("root/notes/"+user.uid+"/"+key).once("value").then(function(data){
-		$("#content").val(data.val().content);
+		oldData = {};
+		oldData.content = data.val().content;
+		oldData.fileName = data.val().fileName;
+		oldData.fileType = data.val().fileType;
+		oldData.fileURL = data.val().fileURL;
+		oldData.oriName = data.val().oriName;
+		console.log(oldData);
+		$("#content").val(oldData.content);
 		chgState('U');
 	});
 }
@@ -213,12 +239,13 @@ function chgState(chk) {
 	switch(chk) {
 		case "C" :
 			key = '';
+			oldData = null;
 			$("#bt_new").attr("disabled", false);
 			$("#bt_save").show();
 			$("#bt_save").attr("disabled", false);
 			$("#bt_up").hide();
 			$("#bt_cls").attr("disabled", false);
-			$("#content").val('');
+			$("#bt_cls").trigger("click");
 			$("#content").focus();
 			$(".imgs").hide();
 			$(".pds").hide();
@@ -226,12 +253,13 @@ function chgState(chk) {
 			break;
 		case "R" :
 			key = '';
+			oldData = null;
 			$("#bt_new").attr("disabled", false);
 			$("#bt_save").show();
 			$("#bt_save").attr("disabled", "disabled");
 			$("#bt_up").hide();
 			$("#bt_cls").attr("disabled", "disabled");
-			$("#content").val('');
+			$("#bt_cls").trigger("click");
 			$(".imgs").hide();
 			$(".pds").hide();
 			wingShow();
@@ -264,7 +292,7 @@ function chgState(chk) {
 			$("#bt_save").attr("disabled", "disabled");
 			$("#bt_up").hide();
 			$("#bt_cls").attr("disabled", "disabled");
-			$("#content").val('');
+			$("#bt_cls").trigger("click");
 			//로그인UI
 			$(".signs > .photos").hide();
 			$(".signs > .conts").hide();
