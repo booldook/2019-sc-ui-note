@@ -3,6 +3,8 @@ var auth = firebase.auth();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
 var user = null;
 var db = firebase.database();
+var storage = firebase.storage();
+var sRef = storage.ref().child("notes");
 var ref = null;
 var key = '';
 function modalOpen(headTxt, contTxt) {
@@ -31,6 +33,17 @@ function localDate(ts) {
 function zp(n) {
 	if(n < 10) return '0'+n;
 	else return n;
+}
+function splitName(name) {
+	var obj = {};
+	var arr = name.split('.');
+	obj.time = new Date().getTime();
+	obj.ext = arr.pop();
+	obj.oriFile = arr.join('.');
+	obj.oriName = obj.oriFile + '.' + obj.ext;
+	obj.newFile = obj.time + '-' + Math.floor(Math.random() * 90 + 10);
+	obj.newName = obj.newFile + '.' + obj.ext;
+	return obj;
 }
 
 /***** 인증처리 *****/
@@ -108,11 +121,20 @@ $("#content").click(function(){
 });
 function dataModify() {
 	var content = $("#content").val();
+	var upfile = $("#upfile")[0].files[0];
+	console.log(upfile);
 	if(content == "") {
 		modalOpen("경고", "내용을 입력하세요.");
 		return false;
 	}
 	else {
+		if(upfile == undefined) {
+
+		}
+		else {
+
+		}
+
 		if(key == "") {
 			db.ref("root/notes/"+user.uid).push({
 				content: content,
@@ -158,6 +180,8 @@ function chgState(chk) {
 			$("#bt_cls").attr("disabled", false);
 			$("#content").val('');
 			$("#content").focus();
+			$(".imgs").hide();
+			$(".pds").hide();
 			wingHide();
 			break;
 		case "R" :
@@ -168,6 +192,8 @@ function chgState(chk) {
 			$("#bt_up").hide();
 			$("#bt_cls").attr("disabled", "disabled");
 			$("#content").val('');
+			$(".imgs").hide();
+			$(".pds").hide();
 			wingShow();
 			break;
 		case "U" :
