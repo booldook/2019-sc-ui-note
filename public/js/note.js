@@ -111,9 +111,23 @@ function onChg(data) {
 	var content = data.val().content;
 	$("#"+data.key).find("h1").text(bTit);
 	$("#"+data.key).find(".title").text(content);
+	if(data.val().fileType == "image") {
+		$(".imgs").css("display", "flex");
+		$(".pds").css("display", "none");
+		$(".imgs").find("img").attr("src", data.val().fileURL);
+		$(".imgs > li").eq(1).text(data.val().oriName);
+	}
+	else if(data.val().fileType == "file"){
+		$(".imgs").css("display", "none");
+		$(".pds").css("display", "flex");
+		$(".pds").find("a").attr("href", data.val().fileURL);
+		$(".pds").find("a").text(data.val().oriName);
+	}
+	else {
+		$(".imgs").css("display", "none");
+		$(".pds").css("display", "none");
+	}
 }
-
-
 
 /***** 데이터베이스 버튼 이벤트 *****/
 $("#bt_new").on("click", function(){
@@ -139,7 +153,6 @@ $("#content").click(function(){
 function dataModify() {
 	var content = $("#content").val();
 	var upfile = $("#upfile")[0].files[0];
-	console.log(upfile);
 	if(content == "") {
 		modalOpen("경고", "내용을 입력하세요.");
 		return false;
@@ -198,7 +211,7 @@ function dataModify() {
 						}
 						else {
 							if(oldData.fileType != undefined) {
-								sRef.child(user.uid+"/"+fileName).delete().then(function(){
+								sRef.child(user.uid+"/"+oldData.fileName).delete().then(function(){
 									db.ref("root/notes/"+user.uid+"/"+key).update({
 										content: content,
 										oriName: file.oriName,
@@ -210,11 +223,10 @@ function dataModify() {
 								});
 							}
 							else {
-								db.ref("root/notes/"+user.uid+"/"+key).
-									db.ref("root/notes/"+user.uid+"/"+key).update({
-										content: content,
-										mdate: new Date().getTime()
-									});	
+								db.ref("root/notes/"+user.uid+"/"+key).update({
+									content: content,
+									mdate: new Date().getTime()
+								});	
 							}
 							chgState('U');
 						}
