@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Firebase 연습</title>
+	<link rel="stylesheet" href="../css/fa.min.css">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/animate.css">
+	<link rel="stylesheet" href="../css/base.css">
+	<link rel="stylesheet" href="../css/test.css">
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/wow.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<h2>Firebase 연습</h2>
+		</div>
+		<div class="signs">
+			<div class="photos">
+				<img src="" alt="" class="img">
+			</div>
+			<div class="conts">
+				<div class="nickname"></div>
+				<div class="email"></div>
+			</div>
+			<div class="bts">
+				<button class="btn btn-primary btn-sm" id="bt_signin">
+					<i class="fab fa-google"></i> 구글 로그인
+				</button>
+				<button class="btn btn-danger btn-sm" id="bt_signout">
+					<i class="fas fa-sign-out-alt"></i> 로그아웃
+				</button>
+			</div>
+		</div>
+		<form class="wrs">
+			<ul>
+				<li><input type="text" class="content form-control" id="content"></li>
+				<li><button type="button" class="btn btn-primary" id="bt_save">저장</button></li>
+			</ul>
+		</form>
+		<table class="table table-bordered table-hover table-striped" id="lists">
+			<thead class="table-dark">
+				<tr>
+					<th class="text-center" style="width: 80%;">내용</th>
+					<th class="text-center">관리</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+	<div class="modal" id="modal">
+		<div class="card">
+			<div class="card-header">
+				<h5><i class="fas fa-exclamation-circle text-danger"></i> <span id="modal_head">알림</span></h5>
+			</div>
+			<div class="card-body" id="modal_cont">경고입니다.</div>
+			<div class="card-footer text-center">
+				<button class="btn btn-danger" id="bt_modal_close">닫기</button>
+				<button class="btn btn-primary btn-sm" id="bt_signin2">
+					<i class="fab fa-google"></i> 구글 로그인
+				</button>
+			</div>
+		</div>	
+	</div>
+	<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+	<script src="../js/fbinit.js"></script>
+	<script src="../js/test.js"></script>
+</body>
+</html>
