@@ -48,7 +48,10 @@ function zp(n) {
 auth.onAuthStateChanged(function(data){
 	user = data;
 	if(user == null) chgState('');
-	else chgState('S');
+	else {
+		chgState('S');
+		dbInit();
+	}
 });
 $("#bt_signin, #bt_signin2").click(function(){
 	auth.signInWithPopup(googleAuth);
@@ -56,6 +59,21 @@ $("#bt_signin, #bt_signin2").click(function(){
 $("#bt_signout").click(function(){
 	auth.signOut();
 });
+
+/***** 데이터 콜백 *****/
+function dbInit() {
+	db.ref("root/uploads/"+user.uid).on("child_added", function(data){
+		var html = '';
+		html += '<li>원본파일명 : '+data.val().oriName+'</li>';
+		html += '<li>저장파일명 : '+data.val().newName+'</li>';
+		html += '<li>저장된위치 : <a href="'+data.val().url+'" target="_blank">'+data.val().url+'</a></li>';
+		html += '<li>저장된시간 : '+localDate(data.val().wdate)+'</li>';
+		html += '<li>파일사이즈 : '+data.val().size+'</li>';
+		html += '<li>남긴한마디 : '+data.val().content+'</li>';
+		html += '<li><img src="'+data.val().url+'" class="img"></li>';
+		$(".console").html(html);
+	});
+}
 
 /***** 데이터 이벤트 *****/
 $("#bt_save").click(onSave);
@@ -72,6 +90,7 @@ function onSave(){
 		$(".loader > .txt").html(Math.ceil(progress) + '%');
 	}
 	function uploadErr(err) {
+		console.log(err);
 		$(".loader").css("display", "none");
 		modalOpen("경고", "파일업로드에 실패하였습니다.");
 	}
@@ -86,17 +105,6 @@ function onSave(){
 			saveData.size = file.size;
 			saveData.url = url;
 			db.ref("root/uploads/"+user.uid).push(saveData).key;
-			db.ref("root/uploads/"+user.uid).on("child_added", function(data){
-				var html = '';
-				html += '<li>원본파일명 : '+data.val().oriName+'</li>';
-				html += '<li>저장파일명 : '+data.val().newName+'</li>';
-				html += '<li>저장된위치 : <a href="'+data.val().url+'" target="_blank">'+data.val().url+'</a></li>';
-				html += '<li>저장된시간 : '+localDate(data.val().wdate)+'</li>';
-				html += '<li>파일사이즈 : '+data.val().size+'</li>';
-				html += '<li>남긴한마디 : '+data.val().content+'</li>';
-				html += '<li><img src="'+data.val().url+'" class="img"></li>';
-				$(".console").html(html);
-			});
 		});
 	}
 }

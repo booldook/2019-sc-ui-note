@@ -33,9 +33,15 @@ html, body {font-family: 'Noto Sans KR', sans-serif; color: #333;}
 .bodys > .writes {flex: 1 1 70%; padding: 1rem; display: flex; flex-direction: column; }
 .bodys > .writes > :nth-child(1) {flex: 0 0 50px; display:flex; justify-content: flex-end; align-items: flex-start;}
 .bodys > .writes > :nth-child(2) {flex: 1 1 100%;}
-.bodys > .writes > :nth-child(3) {flex: 0 0 100px; display: flex; align-items: center; justify-content: center;}
-.bodys > .writes > :nth-child(3) > .btn {margin: 0 0.1rem;}
+.bodys > .writes > :nth-child(3) {flex: 0 0 80px; display: flex; align-items: center;}
+.bodys > .writes > :nth-child(4) {flex: 0 0 100px; display: flex; align-items: center; justify-content: center;}
+.bodys > .writes > :nth-child(4) > .btn {margin: 0 0.1rem;}
 #content {width: 100%; height: 100%; border: 1px solid cornflowerblue; border-radius: 4px; padding: 1rem;}
+
+.imgs {flex: 0 0 200px; display: flex; align-items: center; margin-right: 1rem; }
+.imgs > li:first-child {flex: 0 0 60px; margin-right: 1rem; border-radius: 4px; overflow: hidden;}
+.imgs > li:last-child {flex: 0 0 120px;}
+.pds {flex: 0 0 200px; margin-right: 1rem; display: none;}
 
 .footers {padding: 1rem; text-align: center; background-color: dimgrey; color: #fff;}
 
