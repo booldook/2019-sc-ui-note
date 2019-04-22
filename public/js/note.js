@@ -198,7 +198,7 @@ function dataModify() {
 						}
 						else {
 							if(oldData.fileType != undefined) {
-								storage.ref().child("notes/"+user.uid+"/"+fileName).delete().then(function(){
+								sRef.child(user.uid+"/"+fileName).delete().then(function(){
 									db.ref("root/notes/"+user.uid+"/"+key).update({
 										content: content,
 										oriName: file.oriName,
@@ -228,7 +228,16 @@ function dataRev(obj) {
 	window.event.stopPropagation();
 	var $li = $(obj).parent().parent();
 	key = $li.attr("id");
-	db.ref("root/notes/"+user.uid+"/"+key).remove();
+	db.ref("root/notes/"+user.uid+"/"+key).once("value").then(function(data){
+		if(data.val().fileType != undefined) {
+			sRef.child(user.uid+"/"+data.val().fileName).delete().then(function(){
+				db.ref("root/notes/"+user.uid+"/"+key).remove();
+			});
+		}
+		else {
+			db.ref("root/notes/"+user.uid+"/"+key).remove();
+		}
+	});
 	chgState('R');
 }
 function dataChg(obj) {
