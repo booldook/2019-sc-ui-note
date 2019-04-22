@@ -41,7 +41,7 @@ var btSave = document.getElementById("bt_save");
 var bts = document.getElementsByClassName("btn");
 console.log(btSave);
 console.log(bts[1]);
-for(var i=0 in bts) {
+for(var i=0; i<bts.length; i++) {
 	bts[i].style.borderColor = "green";
 }
 
