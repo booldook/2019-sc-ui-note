@@ -40,10 +40,23 @@ function splitName(name) {
 	obj.time = new Date().getTime();
 	obj.ext = arr.pop();
 	obj.oriFile = arr.join('.');
-	obj.oriName = obj.oriFile + '.' + obj.ext;
+	obj.oriName = name;
 	obj.newFile = obj.time + '-' + Math.floor(Math.random() * 90 + 10);
 	obj.newName = obj.newFile + '.' + obj.ext;
+	obj.allow = allowExt(obj.ext);
 	return obj;
+}
+function allowExt(ext) {
+	var imgExt = ['jpg', 'jpeg', 'png'];
+	var fileExt = ['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'hwp', 'txt', 'zip'];
+
+	for(var i=0 in imgExt) {
+		if(ext == imgExt[i]) return "image";
+	}
+	for(var j=0 in fileExt) {
+		if(ext == fileExt[j]) return "file";
+	}
+	return "notAllow";
 }
 
 /***** 인증처리 *****/
@@ -129,25 +142,52 @@ function dataModify() {
 	}
 	else {
 		if(upfile == undefined) {
-
+			if(key == "") {
+				db.ref("root/notes/"+user.uid).push({
+					content: content,
+					wdate: new Date().getTime()
+				}).key;
+				chgState('R');
+			}
+			else {
+				db.ref("root/notes/"+user.uid+"/"+key).update({
+					content: content,
+					mdate: new Date().getTime()
+				});
+				chgState('U');
+			}
 		}
 		else {
+			var data = null;
+			var file = splitName(upfile.name);
+			if(file.allow == "notAllow") {
+				modalOpen("경고", "업로드 가능한 파일이 아닙니다.");
+				return false;
+			}
+			else {
+				$(".loader").css("display", "flex");
+				var uploader = sRef.child(user.uid+"/"+file.newFile).put(upfile);
+				uploader.on("state_changed", uploadIng, uploadErr, uploadDone);
+				function uploadIng(snapshot){
+					data = snapshot;
+					var progress = (data.bytesTransferred / data.totalBytes) * 100;
+					$(".loader > .txt").html(Math.ceil(progress) + '%');
+				}
+				function uploadErr(err){
+					console.log(err);
+					$(".loader").css("display", "none");
+					modalOpen("경고", "파일업로드에 실패하였습니다.");
+				}
+				function uploadDone(){
+					$(".loader").css("display", "none");
+					console.log(data);
+				}
+			}
+			if(key == "") {
+			}
+			else {
 
-		}
-
-		if(key == "") {
-			db.ref("root/notes/"+user.uid).push({
-				content: content,
-				wdate: new Date().getTime()
-			}).key;
-			chgState('R');
-		}
-		else {
-			db.ref("root/notes/"+user.uid+"/"+key).update({
-				content: content,
-				mdate: new Date().getTime()
-			});
-			chgState('U');
+			}
 		}	
 	}
 }
